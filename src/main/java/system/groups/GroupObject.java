@@ -1,3 +1,5 @@
+package system.groups;
+
 import java.util.UUID;
 
 public class GroupObject {
@@ -9,7 +11,7 @@ public class GroupObject {
     private String icon;
     private String banner;
     private String color;
-    private GroupPrivacyObject privacy;
+    private GroupPrivacy privacy;
     
     
     public String getId() {
@@ -76,11 +78,11 @@ public class GroupObject {
         this.color = color;
     }
     
-    public GroupPrivacyObject getPrivacy() {
+    public GroupPrivacy getPrivacy() {
         return privacy;
     }
     
-    public void setPrivacy(GroupPrivacyObject groupPrivacy) {
+    public void setPrivacy(GroupPrivacy groupPrivacy) {
         this.privacy = groupPrivacy;
     }
 }

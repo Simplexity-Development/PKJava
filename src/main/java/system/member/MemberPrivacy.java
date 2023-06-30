@@ -1,4 +1,6 @@
-public class MemberPrivacyObject {
+package system.member;
+
+public class MemberPrivacy {
     
     private String visibility;
     private String name_privacy;

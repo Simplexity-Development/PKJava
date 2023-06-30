@@ -1,4 +1,6 @@
-public class ProxyTagObject {
+package system.member;
+
+public class ProxyTag {
     
     private String prefix;
     private String suffix;

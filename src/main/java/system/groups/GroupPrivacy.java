@@ -1,4 +1,6 @@
-public class GroupPrivacyObject {
+package system.groups;
+
+public class GroupPrivacy {
     
     private String name_privacy;
     private String description_privacy;

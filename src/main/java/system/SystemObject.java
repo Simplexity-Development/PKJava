@@ -1,3 +1,5 @@
+package system;
+
 import java.util.UUID;
 
 public class SystemObject {
@@ -11,7 +13,7 @@ public class SystemObject {
     private String banner;
     private String color;
     private String created;
-    private SystemPrivacyObject privacy;
+    private SystemPrivacy privacy;
     
     public String getName() {
         return name;
@@ -93,11 +95,11 @@ public class SystemObject {
         this.created = created;
     }
     
-    public SystemPrivacyObject getPrivacy() {
+    public SystemPrivacy getPrivacy() {
         return privacy;
     }
     
-    public void setPrivacy(SystemPrivacyObject privacy) {
+    public void setPrivacy(SystemPrivacy privacy) {
         this.privacy = privacy;
     }
 }

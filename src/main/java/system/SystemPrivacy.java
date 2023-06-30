@@ -1,4 +1,6 @@
-public class SystemPrivacyObject {
+package system;
+
+public class SystemPrivacy {
     
     private String description_privacy;
     private String pronoun_privacy;

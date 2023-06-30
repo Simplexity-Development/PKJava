@@ -1,3 +1,7 @@
+package system.member;
+
+import java.util.List;
+
 public class MemberObject {
     
     private String id;
@@ -10,13 +14,13 @@ public class MemberObject {
     private String webhook_url;
     private String banner;
     private String description;
-    private Integer created;
-    private ProxyTagObject proxy_tags;
+    private String created;
+    private List<ProxyTag> proxy_tags;
     private boolean keep_proxy;
     private Boolean autoproxy_enabled;
     private Integer message_count;
     private Integer last_message_timestamp;
-    private MemberPrivacyObject privacy;
+    private MemberPrivacy privacy;
     
     
     public String getId() {
@@ -99,19 +103,19 @@ public class MemberObject {
         this.description = description;
     }
     
-    public Integer getCreated() {
+    public String getCreated() {
         return created;
     }
     
-    public void setCreated(Integer created) {
+    public void setCreated(String created) {
         this.created = created;
     }
     
-    public ProxyTagObject getProxy_tags() {
+    public List<ProxyTag> getProxy_tags() {
         return proxy_tags;
     }
     
-    public void setProxy_tags(ProxyTagObject proxy_tags) {
+    public void setProxy_tags(List<ProxyTag> proxy_tags) {
         this.proxy_tags = proxy_tags;
     }
     
@@ -147,11 +151,11 @@ public class MemberObject {
         this.last_message_timestamp = last_message_timestamp;
     }
     
-    public MemberPrivacyObject getPrivacy() {
+    public MemberPrivacy getPrivacy() {
         return privacy;
     }
     
-    public void setPrivacy(MemberPrivacyObject memberPrivacy) {
+    public void setPrivacy(MemberPrivacy memberPrivacy) {
         this.privacy = memberPrivacy;
     }
 }

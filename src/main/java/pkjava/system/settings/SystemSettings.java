@@ -1,6 +1,15 @@
-package system.settings;
+package pkjava.system.settings;
 
 public class SystemSettings {
+    private static SystemSettings instance;
+    
+    public SystemSettings() {
+    }
+    
+    public static SystemSettings getInstance() {
+        if (instance == null) instance = new SystemSettings();
+        return instance;
+    }
     private String timezone;
     private boolean pings_enabled;
     private Integer latch_timeout;

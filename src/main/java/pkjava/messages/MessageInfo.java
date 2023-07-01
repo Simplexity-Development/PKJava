@@ -1,9 +1,19 @@
-package messages;
+package pkjava.messages;
 
-import system.SystemObject;
-import system.member.MemberObject;
+import pkjava.system.SystemObject;
+import pkjava.system.member.MemberObject;
 
 public class MessageInfo {
+    
+    private static MessageInfo instance;
+    
+    private MessageInfo() {
+    }
+    
+    public static MessageInfo getInstance() {
+        if (instance == null) instance = new MessageInfo();
+        return instance;
+    }
     private String timestamp;
     private String id;
     private String original;

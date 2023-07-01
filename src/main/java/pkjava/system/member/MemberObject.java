@@ -1,9 +1,17 @@
-package system.member;
+package pkjava.system.member;
 
 import java.util.List;
 
 public class MemberObject {
+    private static MemberObject instance;
     
+    public MemberObject() {
+    }
+    
+    public static MemberObject getInstance() {
+        if (instance == null) instance = new MemberObject();
+        return instance;
+    }
     private String id;
     private String uuid;
     private String name;

@@ -1,6 +1,15 @@
-package system;
+package pkjava.system;
 
 public class AutoproxySettings {
+    private static AutoproxySettings instance;
+    
+    public AutoproxySettings() {
+    }
+    
+    public static AutoproxySettings getInstance() {
+        if (instance == null) instance = new AutoproxySettings();
+        return instance;
+    }
     private AutoproxyMode autoproxy_mode;
     private String autoproxy_member;
     private String last_latch_timestamp;

@@ -1,8 +1,17 @@
-package system;
+package pkjava.system;
 
 import java.util.UUID;
 
 public class SystemObject {
+    private static SystemObject instance;
+    
+    public SystemObject() {
+    }
+    
+    public static SystemObject getInstance() {
+        if (instance == null) instance = new SystemObject();
+        return instance;
+    }
     private String id;
     private UUID uuid;
     private String name;

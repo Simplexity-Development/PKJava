@@ -1,6 +1,15 @@
-package system.member.guilds;
+package pkjava.system.member.guilds;
 
 public class MemberGuildSettings {
+    private static MemberGuildSettings instance;
+    
+    public MemberGuildSettings() {
+    }
+    
+    public static MemberGuildSettings getInstance() {
+        if (instance == null) instance = new MemberGuildSettings();
+        return instance;
+    }
     private String guild_id;
     private String display_name;
     private String avatar_url;

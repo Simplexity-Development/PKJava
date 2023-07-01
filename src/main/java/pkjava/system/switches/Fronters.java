@@ -1,11 +1,20 @@
-package system.switches;
+package pkjava.system.switches;
 
-import system.member.MemberObject;
+import pkjava.system.member.MemberObject;
 
 import java.util.List;
 import java.util.UUID;
 
 public class Fronters {
+    private static Fronters instance;
+    
+    public Fronters() {
+    }
+    
+    public static Fronters getInstance() {
+        if (instance == null) instance = new Fronters();
+        return instance;
+    }
     private UUID id;
     private String timestamp;
     private List<MemberObject> members;

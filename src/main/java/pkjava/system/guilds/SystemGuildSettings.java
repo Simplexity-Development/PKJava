@@ -1,6 +1,17 @@
-package system.guilds;
+package pkjava.system.guilds;
 
 public class SystemGuildSettings {
+    
+    private static SystemGuildSettings instance;
+    
+    public SystemGuildSettings() {
+    }
+    
+    public static SystemGuildSettings getInstance() {
+        if (instance == null) instance = new SystemGuildSettings();
+        return instance;
+    }
+    
     private String guild_id;
     private boolean proxying_enabled;
     private String tag;

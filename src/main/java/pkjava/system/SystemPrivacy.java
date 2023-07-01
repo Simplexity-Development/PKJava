@@ -1,7 +1,15 @@
-package system;
+package pkjava.system;
 
 public class SystemPrivacy {
+    private static SystemPrivacy instance;
     
+    public SystemPrivacy() {
+    }
+    
+    public static SystemPrivacy getInstance() {
+        if (instance == null) instance = new SystemPrivacy();
+        return instance;
+    }
     private String description_privacy;
     private String pronoun_privacy;
     private String member_list_privacy;

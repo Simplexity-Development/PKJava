@@ -1,4 +1,4 @@
-package system;
+package pkjava.system;
 
 public enum AutoproxyMode {
     off,

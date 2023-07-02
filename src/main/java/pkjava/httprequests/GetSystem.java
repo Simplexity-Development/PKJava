@@ -1,12 +1,12 @@
 package pkjava.httprequests;
 
-import pkjava.PKJava;
 import pkjava.system.SystemObject;
 import pkjava.system.SystemPrivacy;
-import org.jetbrains.annotations.Nullable;
-import org.json.HTTP;
-import org.json.JSONArray;
 import org.json.JSONObject;
+import pkjava.utils.Endpoints;
+import pkjava.utils.JSONObjectNullChecks;
+import pkjava.utils.Keys;
+import pkjava.utils.RequestUtils;
 
 
 import java.io.IOException;
@@ -26,41 +26,44 @@ public class GetSystem {
         if (instance == null) instance = new GetSystem();
         return instance;
     }
-    public SystemObject httpRequestGETSystem(HttpClient client, String systemID, @Nullable String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(PKJava.getInstance().getPkAPIBase() + "systems/" + systemID))
+    public SystemObject httpRequestGETSystem(HttpClient client, String systemID, String authToken, String userAgent) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + systemID))
                 .GET()
-                .header(PKJava.getInstance().getPKAuthorizationHeader(), authToken)
+                .header(RequestUtils.authorizationHeader, authToken)
+                .header(RequestUtils.userAgentHeader, userAgent)
                 .build();
         HttpResponse<String> requestResponse = client.send(systemRequest, HttpResponse.BodyHandlers.ofString());
-        JSONObject requestBody = HTTP.toJSONObject(requestResponse.body());
+        JSONObject requestBody = new JSONObject(requestResponse.body());
         SystemObject requestedSystem = new SystemObject();
-        requestedSystem.setId(requestBody.getString("id"));
-        requestedSystem.setUuid(UUID.fromString(requestBody.getString("uuid")));
-        requestedSystem.setName(requestBody.getString("name"));
-        requestedSystem.setDescription(requestBody.getString("description"));
-        requestedSystem.setTag(requestBody.getString("rag"));
-        requestedSystem.setPronouns(requestBody.getString("pronouns"));
-        requestedSystem.setAvatar_url(requestBody.getString("avatar_url"));
-        requestedSystem.setBanner(requestBody.getString("banner"));
-        requestedSystem.setColor(requestBody.getString("color"));
-        requestedSystem.setCreated(requestBody.getString("created"));
+        requestedSystem.setId(requestBody.getString(Keys.idKey));
+        requestedSystem.setUuid(UUID.fromString(requestBody.getString(Keys.uuidKey)));
+        requestedSystem.setName(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.nameKey));
+        requestedSystem.setDescription(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.descriptionKey));
+        requestedSystem.setTag(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.tagKey));
+        requestedSystem.setPronouns(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.pronounsKey));
+        requestedSystem.setAvatar_url(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.avatarURLKey));
+        requestedSystem.setBanner(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.bannerKey));
+        requestedSystem.setColor(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.colorKey));
+        requestedSystem.setCreated(JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.createdKey));
         requestedSystem.setPrivacy(getSystemPrivacyFromBody(requestBody));
         return requestedSystem;
     }
     
     private SystemPrivacy getSystemPrivacyFromBody(JSONObject requestBody){
-        String privacyString = requestBody.getString("privacy");
+        String privacyString = JSONObjectNullChecks.getInstance().nullStringCheck(requestBody, Keys.privacyKey);
         if (privacyString == null || privacyString.isEmpty()) {
             return null;
         }
-        JSONArray systemPrivacyJSON = requestBody.getJSONArray("privacy");
+        JSONObject systemPrivacyJSON =  new JSONObject(Keys.privacyKey);
         SystemPrivacy systemPrivacy = new SystemPrivacy();
-        systemPrivacy.setDescription_privacy(systemPrivacyJSON.getString(0));
-        systemPrivacy.setPronoun_privacy(systemPrivacyJSON.getString(1));
-        systemPrivacy.setMember_list_privacy(systemPrivacyJSON.getString(2));
-        systemPrivacy.setGroup_list_privacy(systemPrivacyJSON.getString(3));
-        systemPrivacy.setFront_privacy(systemPrivacyJSON.getString(4));
-        systemPrivacy.setFront_history_privacy(systemPrivacyJSON.getString(5));
+        systemPrivacy.setDescription_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.descriptionPrivacyKey));
+        systemPrivacy.setPronoun_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.pronounPrivacyKey));
+        systemPrivacy.setMember_list_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.memberListPrivacyKey));
+        systemPrivacy.setGroup_list_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.groupListPrivacyKey));
+        systemPrivacy.setFront_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.frontPrivacyKey));
+        systemPrivacy.setFront_history_privacy(JSONObjectNullChecks.getInstance().nullStringCheck(systemPrivacyJSON, Keys.frontHistoryPrivacyKey));
         return systemPrivacy;
     }
+    
+    
 }

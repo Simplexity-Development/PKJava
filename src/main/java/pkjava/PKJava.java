@@ -20,13 +20,6 @@ public class PKJava {
         return pkJavaClient;
     }
     
-    public String getPkAPIBase() {
-        return "https://api.pluralkit.me/v2/";
-    }
-    public String getPKAuthorizationHeader() {
-        return "Authorization";
-    }
-    
     public void initializePKJavaClient(){
         pkJavaClient = java.net.http.HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)

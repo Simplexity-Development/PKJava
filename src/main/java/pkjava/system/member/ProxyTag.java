@@ -29,4 +29,16 @@ public class ProxyTag {
     public void setSuffix(String suffixTag) {
         this.suffix = suffixTag;
     }
+    @Override
+    public String toString() {
+        String proxyTagsString = "";
+        if (prefix != null) {
+            proxyTagsString += prefix;
+        }
+        proxyTagsString += "text";
+        if (suffix != null) {
+            proxyTagsString += suffix;
+        }
+        return proxyTagsString;
+    }
 }

@@ -14,6 +14,7 @@ public class MessageInfo {
         if (instance == null) instance = new MessageInfo();
         return instance;
     }
+    
     private String timestamp;
     private String id;
     private String original;

@@ -27,7 +27,7 @@ public class MemberObject {
     private boolean keep_proxy;
     private Boolean autoproxy_enabled;
     private Integer message_count;
-    private Integer last_message_timestamp;
+    private String last_message_timestamp;
     private MemberPrivacy privacy;
     
     
@@ -151,11 +151,11 @@ public class MemberObject {
         this.message_count = message_count;
     }
     
-    public Integer getLast_message_timestamp() {
+    public String getLast_message_timestamp() {
         return last_message_timestamp;
     }
     
-    public void setLast_message_timestamp(Integer last_message_timestamp) {
+    public void setLast_message_timestamp(String last_message_timestamp) {
         this.last_message_timestamp = last_message_timestamp;
     }
     

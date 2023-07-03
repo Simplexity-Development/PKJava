@@ -7,11 +7,10 @@ import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class GetAutoproxySettings {
+public class GetAutoproxySettings extends AbstractPKHttpRequest {
     
     private static GetAutoproxySettings instance;
     
@@ -23,13 +22,13 @@ public class GetAutoproxySettings {
         return instance;
     }
     
-    public AutoproxySettings httpRequestGETSystem(HttpClient client, String systemID, String authToken, String userAgent) throws IOException, InterruptedException {
+    public AutoproxySettings httpRequestGETSystem(String systemID, String authToken) throws IOException, InterruptedException {
         HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.autoproxyEndpoint))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, userAgent)
+                .header(RequestUtils.userAgentHeader, this.getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = client.send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), AutoproxySettings.class);
     }
     

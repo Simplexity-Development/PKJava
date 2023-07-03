@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class GetSystem {
+public class GetSystem extends AbstractPKHttpRequest{
     
     private static GetSystem instance;
     
@@ -23,13 +23,13 @@ public class GetSystem {
         return instance;
     }
     
-    public SystemObject httpRequestGETSystem(HttpClient client, String systemID, String authToken, String userAgent) throws IOException, InterruptedException {
+    public SystemObject httpRequestGETSystem(String systemID, String authToken) throws IOException, InterruptedException {
         HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, userAgent)
+                .header(RequestUtils.userAgentHeader, this.getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = client.send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), SystemObject.class);
     }
     

@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class GetSystemSwitches {
+public class GetSystemSwitches extends AbstractPKHttpRequest {
     
     private static GetSystemSwitches instance;
     
@@ -23,13 +23,13 @@ public class GetSystemSwitches {
         return instance;
     }
     
-    public Switches httpRequestGETSystemFronters(HttpClient client, String systemID, String authToken, String userAgent) throws IOException, InterruptedException {
+    public Switches httpRequestGETSystemFronters(String systemID, String authToken) throws IOException, InterruptedException {
         HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.switchesEndpoint))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, userAgent)
+                .header(RequestUtils.userAgentHeader, this.getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = client.send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), Switches.class);
     }
     

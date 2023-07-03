@@ -1,7 +1,9 @@
 package pkjava.utils;
 
 import org.json.JSONObject;
-import pkjava.system.SystemPrivacy;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class JSONObjectNullChecks {
     private static JSONObjectNullChecks instance;
@@ -27,6 +29,15 @@ public class JSONObjectNullChecks {
         }
         integer = jsonObject.getInt(key);
         return integer;
+    }
+    
+    public Map<String, Object> nullMapCheck(JSONObject jsonObject, String key){
+        Map<String, Object> map = new HashMap<>();
+        if (jsonObject.isNull(key)) {
+            return map;
+        }
+        map = jsonObject.toMap();
+        return map;
     }
     
     

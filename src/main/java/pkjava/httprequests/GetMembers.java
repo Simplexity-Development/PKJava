@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import pkjava.system.member.MemberObject;
 import pkjava.utils.Endpoints;
+import pkjava.utils.JSONObjectNullChecks;
+import pkjava.utils.Keys;
 import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
@@ -36,9 +38,14 @@ public class GetMembers {
         List<MemberObject> requestedMembers = new ArrayList<>();
         for (Object receivedObject : requestBody) {
             JSONObject receivedMember = (JSONObject) receivedObject;
-            
+            MemberObject memberObject = new MemberObject();
+            memberObject.setId(receivedMember.getString(Keys.idKey));
+            memberObject.setUuid(receivedMember.getString(Keys.uuidKey));
+            memberObject.setName(receivedMember.getString(Keys.nameKey));
+            memberObject.setDisplay_name(JSONObjectNullChecks.getInstance().nullStringCheck(receivedMember, Keys.displayNameKey));
+            requestedMembers.add(memberObject);
         }
-       
+        return requestedMembers;
         
         
     }

@@ -1,8 +1,10 @@
-package pkjava.httprequests;
+package pkjava.httprequests.get;
 
 import pkjava.PKJava;
+import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.system.AutoproxySettings;
 import pkjava.utils.Endpoints;
+import pkjava.utils.QueryStrings;
 import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
@@ -22,8 +24,8 @@ public class GetAutoproxySettings extends AbstractPKHttpRequest {
         return instance;
     }
     
-    public AutoproxySettings httpRequestGETSystem(String systemID, String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.autoproxyEndpoint))
+    public AutoproxySettings httpRequestGETAutoproxySettings(String systemID, String authToken, String guildID) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.autoproxyEndpoint + "?" + QueryStrings.guildIDString + "=" + guildID))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)
                 .header(RequestUtils.userAgentHeader, this.getUserAgent())

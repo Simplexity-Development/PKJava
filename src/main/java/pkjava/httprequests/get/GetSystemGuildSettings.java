@@ -1,13 +1,13 @@
-package pkjava.httprequests;
+package pkjava.httprequests.get;
 
 import pkjava.PKJava;
+import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.system.guilds.SystemGuildSettings;
 import pkjava.utils.Endpoints;
 import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -23,7 +23,7 @@ public class GetSystemGuildSettings extends AbstractPKHttpRequest {
         return instance;
     }
     
-    public SystemGuildSettings httpRequestGETSystemFronters(String systemID, String authToken, String guildID) throws IOException, InterruptedException {
+    public SystemGuildSettings httpRequestGETSystemGuildSettings(String systemID, String authToken, String guildID) throws IOException, InterruptedException {
         HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.guildEndpoint + "/" + guildID))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)

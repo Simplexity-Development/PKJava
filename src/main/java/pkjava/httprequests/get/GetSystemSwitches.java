@@ -1,13 +1,14 @@
-package pkjava.httprequests;
+package pkjava.httprequests.get;
 
 import pkjava.PKJava;
+import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.system.switches.Switches;
 import pkjava.utils.Endpoints;
+import pkjava.utils.QueryStrings;
 import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
@@ -23,8 +24,8 @@ public class GetSystemSwitches extends AbstractPKHttpRequest {
         return instance;
     }
     
-    public Switches httpRequestGETSystemFronters(String systemID, String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.switchesEndpoint))
+    public Switches httpRequestGETSystemSwitches(String systemID, String authToken, int limit, String timestamp) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.switchesEndpoint + "?" + QueryStrings.beforeString + "=" + timestamp + "&" + QueryStrings.limitString + "=" + limit))
                 .GET()
                 .header(RequestUtils.authorizationHeader, authToken)
                 .header(RequestUtils.userAgentHeader, this.getUserAgent())

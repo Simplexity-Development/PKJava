@@ -1,17 +1,17 @@
-package pkjava.httprequests;
+package pkjava.httprequests.get;
 
 import pkjava.PKJava;
+import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.system.switches.Fronters;
 import pkjava.utils.Endpoints;
 import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class GetSystemFronters extends AbstractPKHttpRequest{
+public class GetSystemFronters extends AbstractPKHttpRequest {
     
     private static GetSystemFronters instance;
     

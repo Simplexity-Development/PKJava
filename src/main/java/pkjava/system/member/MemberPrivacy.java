@@ -2,16 +2,6 @@ package pkjava.system.member;
 
 public class MemberPrivacy {
     
-    private static MemberPrivacy instance;
-    
-    public MemberPrivacy() {
-    }
-    
-    public static MemberPrivacy getInstance() {
-        if (instance == null) instance = new MemberPrivacy();
-        return instance;
-    }
-    
     private String visibility;
     private String name_privacy;
     private String description_privacy;

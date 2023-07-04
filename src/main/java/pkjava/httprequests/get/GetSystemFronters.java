@@ -13,23 +13,14 @@ import java.net.http.HttpResponse;
 
 public class GetSystemFronters extends AbstractPKHttpRequest {
     
-    private static GetSystemFronters instance;
     
-    private GetSystemFronters() {
-    }
-    
-    public static GetSystemFronters getInstance() {
-        if (instance == null) instance = new GetSystemFronters();
-        return instance;
-    }
-    
-    public Fronters httpRequestGETSystemFronters(String systemID, String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.frontersEndpoint))
+    public static Fronters requestSystemFronters(String systemID, String authToken) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID + "/" + Endpoints.fronters))
                 .GET()
-                .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, this.getUserAgent())
+                .header(RequestUtils.authorization, authToken)
+                .header(RequestUtils.userAgent, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), Fronters.class);
     }
     

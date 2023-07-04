@@ -5,24 +5,6 @@ package pkjava.system;
  */
 public class SystemPrivacy {
     
-    private static SystemPrivacy instance;
-    
-    /**
-     * Instantiates a new System privacy.
-     */
-    public SystemPrivacy() {
-    }
-    
-    /**
-     * Gets instance.
-     *
-     * @return the instance
-     */
-    public static SystemPrivacy getInstance() {
-        if (instance == null) instance = new SystemPrivacy();
-        return instance;
-    }
-    
     private String description_privacy;
     private String pronoun_privacy;
     private String member_list_privacy;

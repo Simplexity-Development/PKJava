@@ -13,23 +13,14 @@ import java.net.http.HttpResponse;
 
 public class GetSystemGuildSettings extends AbstractPKHttpRequest {
     
-    private static GetSystemGuildSettings instance;
     
-    private GetSystemGuildSettings() {
-    }
-    
-    public static GetSystemGuildSettings getInstance() {
-        if (instance == null) instance = new GetSystemGuildSettings();
-        return instance;
-    }
-    
-    public SystemGuildSettings httpRequestGETSystemGuildSettings(String systemID, String authToken, String guildID) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.guildEndpoint + "/" + guildID))
+    public static SystemGuildSettings requestSystemGuildSettings(String systemID, String authToken, String guildID) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID + "/" + Endpoints.guilds + "/" + guildID))
                 .GET()
-                .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, this.getUserAgent())
+                .header(RequestUtils.authorization, authToken)
+                .header(RequestUtils.userAgent, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), SystemGuildSettings.class);
     }
     

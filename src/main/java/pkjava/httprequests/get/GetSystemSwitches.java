@@ -14,23 +14,13 @@ import java.net.http.HttpResponse;
 
 public class GetSystemSwitches extends AbstractPKHttpRequest {
     
-    private static GetSystemSwitches instance;
-    
-    private GetSystemSwitches() {
-    }
-    
-    public static GetSystemSwitches getInstance() {
-        if (instance == null) instance = new GetSystemSwitches();
-        return instance;
-    }
-    
-    public Switches httpRequestGETSystemSwitches(String systemID, String authToken, int limit, String timestamp) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.switchesEndpoint + "?" + QueryStrings.beforeString + "=" + timestamp + "&" + QueryStrings.limitString + "=" + limit))
+    public static Switches requestSystemSwitches(String systemID, String authToken, int limit, String timestamp) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID + "/" + Endpoints.switches + "?" + QueryStrings.before + "=" + timestamp + "&" + QueryStrings.limit + "=" + limit))
                 .GET()
-                .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, this.getUserAgent())
+                .header(RequestUtils.authorization, authToken)
+                .header(RequestUtils.userAgent, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), Switches.class);
     }
     

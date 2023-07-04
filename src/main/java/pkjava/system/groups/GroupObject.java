@@ -3,17 +3,6 @@ package pkjava.system.groups;
 import java.util.UUID;
 
 public class GroupObject {
-    
-    private static GroupObject instance;
-    
-    public GroupObject() {
-    }
-    
-    public static GroupObject getInstance() {
-        if (instance == null) instance = new GroupObject();
-        return instance;
-    }
-    
     private String id;
     private UUID uuid;
     private String name;

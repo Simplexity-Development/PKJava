@@ -1,10 +1,10 @@
 package pkjava.utils;
 
 public class QueryStrings {
-    public static final String guildIDString = "guild_id";
-    public static final String channelIDString = "channel_id";
-    public static final String withMembersString = "with_members";
-    public static final String beforeString = "before";
-    public static final String limitString = "limit";
+    public static final String guild_id = "guild_id";
+    public static final String channel_id = "channel_id";
+    public static final String with_members = "with_members";
+    public static final String before = "before";
+    public static final String limit = "limit";
     
 }

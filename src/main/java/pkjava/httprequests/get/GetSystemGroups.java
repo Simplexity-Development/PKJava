@@ -18,23 +18,15 @@ import java.util.List;
 
 public class GetSystemGroups extends AbstractPKHttpRequest {
     
-    private static GetSystemGroups instance;
+
     
-    private GetSystemGroups() {
-    }
-    
-    public static GetSystemGroups getInstance() {
-        if (instance == null) instance = new GetSystemGroups();
-        return instance;
-    }
-    
-    public List<GroupObject> httpRequestGETSystemGroups(String systemID, String authToken, boolean withMembers) throws IOException, InterruptedException {
-        HttpRequest groupsRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.groupEndpoint + "?" + QueryStrings.withMembersString + "=" + withMembers))
+    public static List<GroupObject> requestSystemGroups(String systemID, String authToken, boolean withMembers) throws IOException, InterruptedException {
+        HttpRequest groupsRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID + "/" + Endpoints.group + "?" + QueryStrings.with_members + "=" + withMembers))
                 .GET()
-                .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, this.getUserAgent())
+                .header(RequestUtils.authorization, authToken)
+                .header(RequestUtils.userAgent, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = this.getPkClient().send(groupsRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(groupsRequest, HttpResponse.BodyHandlers.ofString());
         String responseBody = requestResponse.body();
         Type groupObjectListType = new TypeToken<ArrayList<GroupObject>>() {
         }.getType();

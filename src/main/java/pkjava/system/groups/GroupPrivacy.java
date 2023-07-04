@@ -1,17 +1,6 @@
 package pkjava.system.groups;
 
 public class GroupPrivacy {
-    
-    private static GroupPrivacy instance;
-    
-    public GroupPrivacy() {
-    }
-    
-    public static GroupPrivacy getInstance() {
-        if (instance == null) instance = new GroupPrivacy();
-        return instance;
-    }
-    
     private String name_privacy;
     private String description_privacy;
     private String icon_privacy;

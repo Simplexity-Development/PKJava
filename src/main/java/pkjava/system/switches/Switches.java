@@ -4,15 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class Switches {
-    private static Switches instance;
-    
-    public Switches() {
-    }
-    
-    public static Switches getInstance() {
-        if (instance == null) instance = new Switches();
-        return instance;
-    }
     private UUID id;
     private String timestamp;
     private List<String> members;

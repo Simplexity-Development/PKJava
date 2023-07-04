@@ -17,23 +17,13 @@ import java.util.List;
 
 public class GetMembers extends AbstractPKHttpRequest {
     
-    private static GetMembers instance;
-    
-    private GetMembers() {
-    }
-    
-    public static GetMembers getInstance() {
-        if (instance == null) instance = new GetMembers();
-        return instance;
-    }
-    
-    public List<MemberObject> httpRequestGETMembers(String systemID, String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systemsEndpoint + "/" + systemID + "/" + Endpoints.membersEndpoint))
+    public static List<MemberObject> requestMembers(String systemID, String authToken) throws IOException, InterruptedException {
+        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID + "/" + Endpoints.members))
                 .GET()
-                .header(RequestUtils.authorizationHeader, authToken)
-                .header(RequestUtils.userAgentHeader, this.getUserAgent())
+                .header(RequestUtils.authorization, authToken)
+                .header(RequestUtils.userAgent, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = this.getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
         String responseBody = requestResponse.body();
         Type memberObjectListType = new TypeToken<ArrayList<MemberObject>>() {
         }.getType();

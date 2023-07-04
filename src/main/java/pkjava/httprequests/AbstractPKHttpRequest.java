@@ -1,18 +1,19 @@
 package pkjava.httprequests;
 
 import pkjava.PKJava;
+import pkjava.utils.RequestUtils;
 
 import java.net.http.HttpClient;
 
 public abstract class AbstractPKHttpRequest {
-    private final HttpClient pkClient = PKJava.getInstance().getPKJavaClient();
-    private final String userAgent = PKJava.getInstance().getUserAgent();
+    public static final HttpClient pkClient = PKJava.getInstance().getPKJavaClient();
+    public static final String userAgent = PKJava.getInstance().getUserAgent();
     
-    public HttpClient getPkClient() {
+    public static HttpClient getPkClient() {
         return pkClient;
     }
     
-    public String getUserAgent() {
-        return userAgent;
+    public static String getUserAgent() {
+        return RequestUtils.userAgent;
     }
 }

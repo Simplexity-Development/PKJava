@@ -1,7 +1,7 @@
 package pkjava.system.groups;
 
 import java.util.UUID;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class GroupObject {
     private String id;
     private UUID uuid;

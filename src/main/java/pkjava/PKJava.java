@@ -6,7 +6,9 @@ import com.google.gson.GsonBuilder;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
+@SuppressWarnings("unused") /*Library, this is being used externally*/
 public class PKJava {
+    
     private static PKJava instance;
     
     private PKJava() {
@@ -28,11 +30,12 @@ public class PKJava {
     public HttpClient getPKJavaClient() {
         return pkJavaClient;
     }
-    public void setPkJavaClient(HttpClient httpClient){
+    
+    public void setPkJavaClient(HttpClient httpClient) {
         pkJavaClient = httpClient;
     }
     
-    public void initializeDefaultPKJavaClient(){
+    public void initializeDefaultPKJavaClient() {
         HttpClient pkClient = java.net.http.HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
                 .connectTimeout(Duration.ofSeconds(10))

@@ -1,5 +1,5 @@
 package pkjava.system;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class AutoproxySettings {
     private AutoproxyMode autoproxy_mode;
     private String autoproxy_member;

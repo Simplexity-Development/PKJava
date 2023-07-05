@@ -4,7 +4,7 @@ import pkjava.system.member.MemberObject;
 
 import java.util.List;
 import java.util.UUID;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class Fronters {
     private UUID id;
     private String timestamp;

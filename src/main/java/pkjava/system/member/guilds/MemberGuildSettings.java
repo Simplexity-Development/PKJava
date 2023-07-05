@@ -1,5 +1,5 @@
 package pkjava.system.member.guilds;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class MemberGuildSettings {
     private String guild_id;
     private String display_name;

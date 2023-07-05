@@ -1,5 +1,5 @@
 package pkjava.system.settings;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class SystemSettings {
     private String timezone;
     private boolean pings_enabled;

@@ -3,24 +3,24 @@ package pkjava.httprequests.get;
 import pkjava.PKJava;
 import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.system.SystemObject;
-import pkjava.utils.Endpoints;
-import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class GetSystem extends AbstractPKHttpRequest {
     
     
-    public static SystemObject requestSystem(String systemID, String authToken) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.systems + "/" + systemID))
+    public static SystemObject requestSystem(String authToken, String systemID) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
+                        + systems + "/"
+                        + systemID))
                 .GET()
-                .header(RequestUtils.authorization, authToken)
-                .header(RequestUtils.userAgent, getUserAgent())
+                .header(authorization, authToken)
+                .header(userAgentHeader, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(request, HttpResponse.BodyHandlers.ofString());
         return PKJava.getInstance().getGson().fromJson(requestResponse.body(), SystemObject.class);
     }
     

@@ -1,7 +1,7 @@
 package pkjava.system.member;
 
 import java.util.List;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class MemberObject {
     private String id;
     private String uuid;

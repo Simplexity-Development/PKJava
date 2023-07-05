@@ -3,7 +3,7 @@ package pkjava.system;
 /**
  * The type System privacy.
  */
-public class SystemPrivacy {
+@SuppressWarnings("unused") /*Library, this is being used externally*/ public class SystemPrivacy {
     
     private String description_privacy;
     private String pronoun_privacy;

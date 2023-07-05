@@ -2,7 +2,7 @@ package pkjava.messages;
 
 import pkjava.system.SystemObject;
 import pkjava.system.member.MemberObject;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class MessageInfo {
     
     private String timestamp;

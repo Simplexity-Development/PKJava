@@ -1,5 +1,5 @@
 package pkjava.system.member;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class MemberPrivacy {
     
     private String visibility;

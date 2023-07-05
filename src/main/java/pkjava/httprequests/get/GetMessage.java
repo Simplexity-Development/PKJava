@@ -3,22 +3,22 @@ package pkjava.httprequests.get;
 import pkjava.PKJava;
 import pkjava.httprequests.AbstractPKHttpRequest;
 import pkjava.messages.MessageInfo;
-import pkjava.utils.Endpoints;
-import pkjava.utils.RequestUtils;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class GetMessage extends AbstractPKHttpRequest {
     
     public static MessageInfo requestMessageInfo(String messageID) throws IOException, InterruptedException {
-        HttpRequest systemRequest = HttpRequest.newBuilder(URI.create(RequestUtils.pkAPIBase + Endpoints.messages + "/" + messageID))
+        HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
+                        + messages + "/"
+                        + messageID))
                 .GET()
-                .header(RequestUtils.userAgent, getUserAgent())
+                .header(userAgentHeader, getUserAgent())
                 .build();
-        HttpResponse<String> requestResponse = getPkClient().send(systemRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> requestResponse = getPkClient().send(request, HttpResponse.BodyHandlers.ofString());
         String responseBody = requestResponse.body();
         return PKJava.getInstance().getGson().fromJson(responseBody, MessageInfo.class);
     }

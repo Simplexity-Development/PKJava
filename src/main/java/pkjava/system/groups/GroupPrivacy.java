@@ -1,5 +1,5 @@
 package pkjava.system.groups;
-
+@SuppressWarnings("unused") //Library, this is being used externally
 public class GroupPrivacy {
     private String name_privacy;
     private String description_privacy;

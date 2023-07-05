@@ -2,9 +2,11 @@ package pkjava.system;
 
 import java.util.UUID;
 
+
 /**
  * The type System object.
  */
+@SuppressWarnings("unused") /*Library, this is being used externally*/
 public class SystemObject {
     
     private String id;

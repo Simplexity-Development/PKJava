@@ -26,6 +26,7 @@ import java.util.List;
 
 @SuppressWarnings("unused") /*Library, this is being used externally*/
 public class PKJava {
+    
     private final String pkAPIBase = "https://api.pluralkit.me/v2/";
     private final String authorization = "Authorization";
     private final String userAgentHeader = "User-Agent";
@@ -50,13 +51,16 @@ public class PKJava {
     public PKJava() {
         this.initializeDefaultPKJavaClient();
     }
+    
     private HttpClient pkJavaClient;
     private String userAgent;
+    private String authToken;
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .setLenient()
             .create();
+    
     public void initializeDefaultPKJavaClient() {
         HttpClient httpClient = java.net.http.HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_2)
@@ -65,7 +69,8 @@ public class PKJava {
         setPkJavaClient(httpClient);
         setUserAgent("PKJava Library - Contact at https://github.com/Simplexity-Development/PKJava/issues");
     }
-    public AutoproxySettings requestAutoproxySettings(String authToken, String systemID, String guildID) throws IOException, InterruptedException {
+    
+    public AutoproxySettings requestAutoproxySettings(String systemID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -79,7 +84,8 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), AutoproxySettings.class);
     }
-    public GroupObject requestGroup(String authToken, String systemID, String groupID) throws IOException, InterruptedException {
+    
+    public GroupObject requestGroup(String systemID, String groupID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems
                         + systemID + "/"
@@ -94,7 +100,7 @@ public class PKJava {
         return gson.fromJson(responseBody, GroupObject.class);
     }
     
-    public List<MemberObject> requestGroupMembers(String authToken, String systemID, String groupID) throws IOException, InterruptedException {
+    public List<MemberObject> requestGroupMembers(String systemID, String groupID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -112,7 +118,7 @@ public class PKJava {
         return gson.fromJson(responseBody, memberObjectListType);
     }
     
-    public MemberObject requestMember(String authToken, String systemID, String memberID) throws IOException, InterruptedException {
+    public MemberObject requestMember(String systemID, String memberID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems
                         + systemID + "/"
@@ -127,7 +133,7 @@ public class PKJava {
         return gson.fromJson(responseBody, MemberObject.class);
     }
     
-    public List<GroupObject> requestMemberGroups(String authToken, String systemID, String memberID) throws IOException, InterruptedException {
+    public List<GroupObject> requestMemberGroups(String systemID, String memberID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -145,7 +151,7 @@ public class PKJava {
         return gson.fromJson(responseBody, groupObjectListType);
     }
     
-    public MemberGuildSettings requestMemberGuildSettings(String authToken, String systemID, String memberID, String guildID) throws IOException, InterruptedException {
+    public MemberGuildSettings requestMemberGuildSettings(String systemID, String memberID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -161,7 +167,7 @@ public class PKJava {
         return gson.fromJson(requestResponse.body(), MemberGuildSettings.class);
     }
     
-    public List<MemberObject> requestMembers(String authToken, String systemID) throws IOException, InterruptedException {
+    public List<MemberObject> requestMembers(String systemID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -189,7 +195,7 @@ public class PKJava {
         return gson.fromJson(responseBody, MessageInfo.class);
     }
     
-    public SystemObject requestSystem(String authToken, String systemID) throws IOException, InterruptedException {
+    public SystemObject requestSystem(String systemID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID))
@@ -201,7 +207,7 @@ public class PKJava {
         return gson.fromJson(requestResponse.body(), SystemObject.class);
     }
     
-    public Fronters requestSystemFronters(String authToken, String systemID) throws IOException, InterruptedException {
+    public Fronters requestSystemFronters(String systemID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -214,7 +220,7 @@ public class PKJava {
         return gson.fromJson(requestResponse.body(), Fronters.class);
     }
     
-    public List<GroupObject> requestSystemGroups(String authToken, String systemID, boolean withMembers) throws IOException, InterruptedException {
+    public List<GroupObject> requestSystemGroups(String systemID, boolean withMembers) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -232,7 +238,7 @@ public class PKJava {
         return gson.fromJson(responseBody, groupObjectListType);
     }
     
-    public SystemGuildSettings requestSystemGuildSettings(String authToken, String systemID, String guildID) throws IOException, InterruptedException {
+    public SystemGuildSettings requestSystemGuildSettings(String systemID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -246,7 +252,7 @@ public class PKJava {
         return gson.fromJson(requestResponse.body(), SystemGuildSettings.class);
     }
     
-    public SystemSettings requestSystemSettings(String authToken, String systemID) throws IOException, InterruptedException {
+    public SystemSettings requestSystemSettings(String systemID) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -259,7 +265,7 @@ public class PKJava {
         return gson.fromJson(requestResponse.body(), SystemSettings.class);
     }
     
-    public Switches requestSystemSwitches(String authToken, String systemID, int limit, String timestamp) throws IOException, InterruptedException {
+    public Switches requestSystemSwitches(String systemID, int limit, String timestamp) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -275,6 +281,7 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), Switches.class);
     }
+    
     public HttpClient getPKJavaClient() {
         return pkJavaClient;
     }
@@ -289,6 +296,9 @@ public class PKJava {
     
     public String getUserAgent() {
         return userAgent;
+    }
+    public void setAuthToken(String newAuthToken) {
+        authToken = newAuthToken;
     }
     
     public void setUserAgent(String newUserAgent) {

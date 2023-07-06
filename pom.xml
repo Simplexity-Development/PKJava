@@ -2,8 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>simplexity</groupId>
-    <artifactId>PKJava</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>pkjava</artifactId>
+    <version>0.0.1</version>
+    <name>PKJava</name>
+    <description>A java library to interface with Plural Kit</description>
+    <url>https://github.com/Simplexity-Development/PKJava</url>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -15,7 +18,44 @@
             <version>2.10.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.5.0</version>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.0</version>
+            <type>maven-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.1.0</version>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/Simplexity-Development/PKJava/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Eclipse Rhythmic</name>
+            <email>mc.adhdmc@gmail.com</email>
+            <organization>Simplexity Development</organization>
+            <organizationUrl>https://github.com/Simplexity-Development</organizationUrl>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/Simplexity-Development/PKJava.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Simplexity-Development/PKJava.git</developerConnection>
+        <url>https://github.com/Simplexity-Development/PKJava</url>
+    </scm>
     <build>
         <defaultGoal>package</defaultGoal>
         <plugins>

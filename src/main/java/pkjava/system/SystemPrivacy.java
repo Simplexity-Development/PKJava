@@ -117,7 +117,7 @@ package pkjava.system;
      * Gets front history privacy.
      * <br>Returned string will be "public" or "private"
      *
-     * @return String
+     * @return String front history privacy
      */
     public String getFront_history_privacy() {
         return front_history_privacy;

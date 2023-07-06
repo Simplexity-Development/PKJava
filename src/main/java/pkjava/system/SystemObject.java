@@ -79,7 +79,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's description.
      *
-     * @return String
+     * @return String description
      */
     public String getDescription() {
         return description;
@@ -98,7 +98,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's tag.
      *
-     * @return String
+     * @return String tag
      */
     public String getTag() {
         return tag;
@@ -117,7 +117,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's SystemObject's pronouns.
      *
-     * @return String
+     * @return String pronouns
      */
     public String getPronouns() {
         return pronouns;
@@ -136,7 +136,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's avatar url.
      *
-     * @return String
+     * @return String avatar url
      */
     public String getAvatar_url() {
         return avatar_url;
@@ -175,7 +175,7 @@ public class SystemObject {
      * Gets SystemObject's color.
      * <br>6 character hex code, without leading #
      *
-     * @return String
+     * @return String color
      */
     public String getColor() {
         return color;
@@ -194,7 +194,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's datetime of creation
      *
-     * @return String
+     * @return String created
      */
     public String getCreated() {
         return created;
@@ -212,7 +212,7 @@ public class SystemObject {
     /**
      * Gets SystemObject's corresponding SystemPrivacy object.
      *
-     * @return SystemPrivacy
+     * @return SystemPrivacy privacy
      */
     public SystemPrivacy getPrivacy() {
         return privacy;

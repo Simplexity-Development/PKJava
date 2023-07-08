@@ -2,7 +2,9 @@ package pkjava;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import pkjava.exception.PKApiException;
 import pkjava.messages.MessageInfo;
 import pkjava.system.AutoproxySettings;
 import pkjava.system.SystemObject;
@@ -47,6 +49,7 @@ public class PKJava {
     private final String with_members = "with_members";
     private final String before = "before";
     private final String limit = "limit";
+    private final int ERROR_CODES_START = 400;
     
     public PKJava() {
         this.initializeDefaultPKJavaClient();
@@ -91,8 +94,9 @@ public class PKJava {
      * @return The autoproxy settings.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public AutoproxySettings requestAutoproxySettings(String systemID, String guildID) throws IOException, InterruptedException {
+    public AutoproxySettings requestAutoproxySettings(String systemID, String guildID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -101,6 +105,10 @@ public class PKJava {
                         + guildID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), AutoproxySettings.class);
     }
     
@@ -112,8 +120,9 @@ public class PKJava {
      * @return The group object.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public GroupObject requestGroup(String systemID, String groupID) throws IOException, InterruptedException {
+    public GroupObject requestGroup(String systemID, String groupID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems
                         + systemID + "/"
@@ -121,6 +130,10 @@ public class PKJava {
                         + groupID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, GroupObject.class);
     }
@@ -132,8 +145,9 @@ public class PKJava {
      * @return The list of member objects.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public List<MemberObject> requestGroupMembers(String systemID, String groupID) throws IOException, InterruptedException {
+    public List<MemberObject> requestGroupMembers(String systemID, String groupID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -142,6 +156,10 @@ public class PKJava {
                         + members))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         Type memberObjectListType = new TypeToken<ArrayList<MemberObject>>() {
         }.getType();
@@ -155,8 +173,9 @@ public class PKJava {
      * @return The member object.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public MemberObject requestMember(String systemID, String memberID) throws IOException, InterruptedException {
+    public MemberObject requestMember(String systemID, String memberID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems
                         + systemID + "/"
@@ -164,6 +183,10 @@ public class PKJava {
                         + memberID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, MemberObject.class);
     }
@@ -175,8 +198,9 @@ public class PKJava {
      * @return The list of group objects.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public List<GroupObject> requestMemberGroups(String systemID, String memberID) throws IOException, InterruptedException {
+    public List<GroupObject> requestMemberGroups(String systemID, String memberID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -185,6 +209,10 @@ public class PKJava {
                         + groups))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         Type groupObjectListType = new TypeToken<ArrayList<GroupObject>>() {
         }.getType();
@@ -199,8 +227,9 @@ public class PKJava {
      * @return The member guild settings.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public MemberGuildSettings requestMemberGuildSettings(String systemID, String memberID, String guildID) throws IOException, InterruptedException {
+    public MemberGuildSettings requestMemberGuildSettings(String systemID, String memberID, String guildID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -210,6 +239,10 @@ public class PKJava {
                         + guildID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), MemberGuildSettings.class);
     }
     /**
@@ -219,14 +252,19 @@ public class PKJava {
      * @return The list of member objects.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public List<MemberObject> requestMembers(String systemID) throws IOException, InterruptedException {
+    public List<MemberObject> requestMembers(String systemID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
                         + members))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         Type memberObjectListType = new TypeToken<ArrayList<MemberObject>>() {
         }.getType();
@@ -239,13 +277,18 @@ public class PKJava {
      * @return The message info.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public MessageInfo requestMessageInfo(String messageID) throws IOException, InterruptedException {
+    public MessageInfo requestMessageInfo(String messageID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + messages + "/"
                         + messageID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, MessageInfo.class);
     }
@@ -256,13 +299,18 @@ public class PKJava {
      * @return The system object.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public SystemObject requestSystem(String systemID) throws IOException, InterruptedException {
+    public SystemObject requestSystem(String systemID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), SystemObject.class);
     }
     /**
@@ -272,14 +320,19 @@ public class PKJava {
      * @return The fronters object.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public Fronters requestSystemFronters(String systemID) throws IOException, InterruptedException {
+    public Fronters requestSystemFronters(String systemID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
                         + fronters))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), Fronters.class);
     }
     /**
@@ -290,8 +343,9 @@ public class PKJava {
      * @return The list of group objects.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public List<GroupObject> requestSystemGroups(String systemID, boolean withMembers) throws IOException, InterruptedException {
+    public List<GroupObject> requestSystemGroups(String systemID, boolean withMembers) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -300,6 +354,10 @@ public class PKJava {
                         + withMembers))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         String responseBody = requestResponse.body();
         Type groupObjectListType = new TypeToken<ArrayList<GroupObject>>() {
         }.getType();
@@ -313,8 +371,9 @@ public class PKJava {
      * @return The system guild settings.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public SystemGuildSettings requestSystemGuildSettings(String systemID, String guildID) throws IOException, InterruptedException {
+    public SystemGuildSettings requestSystemGuildSettings(String systemID, String guildID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -322,6 +381,10 @@ public class PKJava {
                         + guildID))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), SystemGuildSettings.class);
     }
     /**
@@ -331,14 +394,19 @@ public class PKJava {
      * @return The system settings.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public SystemSettings requestSystemSettings(String systemID) throws IOException, InterruptedException {
+    public SystemSettings requestSystemSettings(String systemID) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
                         + settings))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), SystemSettings.class);
     }
     /**
@@ -350,8 +418,9 @@ public class PKJava {
      * @return The switches object.
      * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the operation is interrupted.
+     * @throws PKApiException       If the response failed and for what reason based on PluralKit Status and Error Codes.
      */
-    public Switches requestSystemSwitches(String systemID, int limit, String timestamp) throws IOException, InterruptedException {
+    public Switches requestSystemSwitches(String systemID, int limit, String timestamp) throws IOException, InterruptedException, PKApiException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
                         + systems + "/"
                         + systemID + "/"
@@ -362,6 +431,10 @@ public class PKJava {
                         + limit))
                 .build();
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (requestResponse.statusCode() >= ERROR_CODES_START) {
+            JsonObject json = gson.fromJson(requestResponse.body(), JsonObject.class);
+            throw new PKApiException(json.get("message").getAsString(), json.get("code").getAsInt(), requestResponse.statusCode());
+        }
         return gson.fromJson(requestResponse.body(), Switches.class);
     }
     /**

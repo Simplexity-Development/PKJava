@@ -24,9 +24,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The type Pk java.
- */
 @SuppressWarnings("unused") /*Library, this is being used externally*/
 public class PKJava {
     
@@ -51,9 +48,6 @@ public class PKJava {
     private final String before = "before";
     private final String limit = "limit";
     
-    /**
-     * Instantiates a new Pk java.
-     */
     public PKJava() {
         this.initializeDefaultPKJavaClient();
     }
@@ -61,14 +55,17 @@ public class PKJava {
     private HttpClient pkJavaClient;
     private String userAgent = "PKJava Library - Contact at https://github.com/Simplexity-Development/PKJava/issues";
     private String authToken;
+    /**
+     * The Gson object for serializing and deserializing JSON.
+     */
     private final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .setLenient()
             .create();
-    
     /**
-     * Initialize default pk java client. Uses "userAgent"
+     * Initializes the default PKJava client with default settings.
+     * <br>Uses "userAgent"
      */
     public void initializeDefaultPKJavaClient() {
         HttpClient httpClient = java.net.http.HttpClient.newBuilder()
@@ -78,25 +75,22 @@ public class PKJava {
         setPkJavaClient(httpClient);
         setUserAgent(userAgent);
     }
-    
     /**
-     * The Http request builder, includes "authToken" and "userAgent"
+     * The builder for creating HTTP requests.
+     * <br>Uses "authToken" and "userAgent"
      */
     public HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder()
             .GET()
             .header(authorization, authToken)
             .header(userAgentHeader, userAgent);
-    
     /**
-     * Gets supplied system's autoproxy settings for the supplied guild
+     * Sends a request to get the autoproxy settings for a system and guild.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param guildID the guild id
-     *
-     * @return the autoproxy settings
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param guildID  The ID of the guild.
+     * @return The autoproxy settings.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public AutoproxySettings requestAutoproxySettings(String systemID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -111,15 +105,13 @@ public class PKJava {
     }
     
     /**
-     * Request group information
+     * Sends a request to get a group by ID.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param groupID the group's id
-     *
-     * @return the group object
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param groupID  The ID of the group.
+     * @return The group object.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public GroupObject requestGroup(String systemID, String groupID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -132,17 +124,14 @@ public class PKJava {
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, GroupObject.class);
     }
-    
     /**
-     * Request group members list.
+     * Sends a request to get the members of a group.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param groupID the group id
-     *
-     * @return the list
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param groupID  The ID of the group.
+     * @return The list of member objects.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public List<MemberObject> requestGroupMembers(String systemID, String groupID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -158,17 +147,14 @@ public class PKJava {
         }.getType();
         return gson.fromJson(responseBody, memberObjectListType);
     }
-    
     /**
-     * Request member member object.
+     * Sends a request to get a member by ID.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param memberID the member id
-     *
-     * @return the member object
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID  The ID of the system.
+     * @param memberID  The ID of the member.
+     * @return The member object.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public MemberObject requestMember(String systemID, String memberID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -181,17 +167,14 @@ public class PKJava {
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, MemberObject.class);
     }
-    
     /**
-     * Request member groups list.
+     * Sends a request to get the groups a member belongs to.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param memberID the member id
-     *
-     * @return the list
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param memberID The ID of the member.
+     * @return The list of group objects.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public List<GroupObject> requestMemberGroups(String systemID, String memberID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -207,18 +190,15 @@ public class PKJava {
         }.getType();
         return gson.fromJson(responseBody, groupObjectListType);
     }
-    
     /**
-     * Request member guild settings member guild settings.
+     * Sends a request to get the guild settings for a member.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param memberID the member id
-     * @param guildID the guild id
-     *
-     * @return the member guild settings
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param memberID The ID of the member.
+     * @param guildID  The ID of the guild.
+     * @return The member guild settings.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public MemberGuildSettings requestMemberGuildSettings(String systemID, String memberID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -232,16 +212,13 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), MemberGuildSettings.class);
     }
-    
     /**
-     * Request members list.
+     * Sends a request to get all members of a system.
      *
-     * @param systemID the system's 5-character id or UUID
-     *
-     * @return the list
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @return The list of member objects.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public List<MemberObject> requestMembers(String systemID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -255,16 +232,13 @@ public class PKJava {
         }.getType();
         return gson.fromJson(responseBody, memberObjectListType);
     }
-    
     /**
-     * Request message info message info.
+     * Sends a request to get the message info for a message ID.
      *
-     * @param messageID the message id
-     *
-     * @return the message info
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param messageID The ID of the message.
+     * @return The message info.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public MessageInfo requestMessageInfo(String messageID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -275,16 +249,13 @@ public class PKJava {
         String responseBody = requestResponse.body();
         return gson.fromJson(responseBody, MessageInfo.class);
     }
-    
     /**
-     * Request system system object.
+     * Sends a request to get the system info for a system ID.
      *
-     * @param systemID the system's 5-character id or UUID
-     *
-     * @return the system object
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @return The system object.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public SystemObject requestSystem(String systemID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -294,16 +265,13 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), SystemObject.class);
     }
-    
     /**
-     * Request system fronters fronters.
+     * Sends a request to get the fronters of a system.
      *
-     * @param systemID the system's 5-character id or UUID
-     *
-     * @return the fronters
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @return The fronters object.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public Fronters requestSystemFronters(String systemID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -314,17 +282,14 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), Fronters.class);
     }
-    
     /**
-     * Request system groups list.
+     * Sends a request to get the system groups for a system.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param withMembers the with members
-     *
-     * @return the list
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID     The ID of the system.
+     * @param withMembers  Whether to include members in the response.
+     * @return The list of group objects.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public List<GroupObject> requestSystemGroups(String systemID, boolean withMembers) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -340,17 +305,14 @@ public class PKJava {
         }.getType();
         return gson.fromJson(responseBody, groupObjectListType);
     }
-    
     /**
-     * Request system guild settings system guild settings.
+     * Sends a request to get the guild settings for a system in a guild.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param guildID the guild id
-     *
-     * @return the system guild settings
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @param guildID  The ID of the guild.
+     * @return The system guild settings.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public SystemGuildSettings requestSystemGuildSettings(String systemID, String guildID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -362,16 +324,13 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), SystemGuildSettings.class);
     }
-    
     /**
-     * Request system settings system settings.
+     * Sends a request to get the system settings for a system.
      *
-     * @param systemID the system's 5-character id or UUID
-     *
-     * @return the system settings
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID The ID of the system.
+     * @return The system settings.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public SystemSettings requestSystemSettings(String systemID) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -382,18 +341,15 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), SystemSettings.class);
     }
-    
     /**
-     * Request system switches switches.
+     * Sends a request to get the system switches for a system.
      *
-     * @param systemID the system's 5-character id or UUID
-     * @param limit the limit
-     * @param timestamp the timestamp
-     *
-     * @return the switches
-     *
-     * @throws IOException the io exception
-     * @throws InterruptedException the interrupted exception
+     * @param systemID  The ID of the system.
+     * @param limit     The maximum number of switches to retrieve.
+     * @param timestamp The timestamp to retrieve switches before.
+     * @return The switches object.
+     * @throws IOException          If an I/O error occurs.
+     * @throws InterruptedException If the operation is interrupted.
      */
     public Switches requestSystemSwitches(String systemID, int limit, String timestamp) throws IOException, InterruptedException {
         HttpRequest request = httpRequestBuilder.uri(URI.create(pkAPIBase
@@ -408,56 +364,50 @@ public class PKJava {
         HttpResponse<String> requestResponse = pkJavaClient.send(request, HttpResponse.BodyHandlers.ofString());
         return gson.fromJson(requestResponse.body(), Switches.class);
     }
-    
     /**
-     * Gets pk java client.
+     * Gets the PKJava client.
      *
-     * @return the pk java client
+     * @return The PKJava client.
      */
     public HttpClient getPKJavaClient() {
         return pkJavaClient;
     }
-    
     /**
-     * Sets pk java client.
+     * Sets the PKJava client.
      *
-     * @param httpClient the http client
+     * @param httpClient The PKJava client to set.
      */
     public void setPkJavaClient(HttpClient httpClient) {
         pkJavaClient = httpClient;
     }
-    
     /**
-     * Gets gson.
+     * Gets the Gson object.
      *
-     * @return the gson
+     * @return The Gson object.
      */
     public Gson getGson() {
         return gson;
     }
-    
     /**
-     * Gets user agent.
+     * Gets the user agent.
      *
-     * @return the user agent
+     * @return The user agent.
      */
     public String getUserAgent() {
         return userAgent;
     }
-    
     /**
-     * Sets auth token.
+     * Sets the authentication token.
      *
-     * @param newAuthToken the new auth token
+     * @param newAuthToken The new authentication token to set.
      */
     public void setAuthToken(String newAuthToken) {
         authToken = newAuthToken;
     }
-    
     /**
-     * Sets user agent.
+     * Sets the user agent.
      *
-     * @param newUserAgent the new user agent
+     * @param newUserAgent The new user agent to set.
      */
     public void setUserAgent(String newUserAgent) {
         userAgent = newUserAgent;

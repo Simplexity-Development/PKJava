@@ -1,6 +1,6 @@
 package pkjava.exception;
 
-public class PKApiException extends Exception {
+public class PKException extends Exception {
 
     private final int errorCode;
     private final int httpResponseCode;
@@ -11,7 +11,7 @@ public class PKApiException extends Exception {
      * @param errorCode PluralKit Error Code
      * @param httpResponseCode HTTP Response Status Code
      */
-    public PKApiException(String message, int errorCode, int httpResponseCode) {
+    public PKException(String message, int errorCode, int httpResponseCode) {
         super(message);
         this.errorCode = errorCode;
         this.httpResponseCode = httpResponseCode;
@@ -24,7 +24,7 @@ public class PKApiException extends Exception {
      * @param httpResponseCode HTTP Response Status Code
      * @param cause Exception that caused this exception.
      */
-    public PKApiException(String message, int errorCode, int httpResponseCode, Throwable cause) {
+    public PKException(String message, int errorCode, int httpResponseCode, Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;
         this.httpResponseCode = httpResponseCode;

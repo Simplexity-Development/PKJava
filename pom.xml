@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>simplexity</groupId>
     <artifactId>pkjava</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <name>PKJava</name>
     <description>A java library to interface with Plural Kit</description>
     <url>https://github.com/Simplexity-Development/PKJava</url>

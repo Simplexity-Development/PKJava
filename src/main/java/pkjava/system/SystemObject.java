@@ -17,30 +17,65 @@ public class SystemObject {
     private String color;
     private String created;
     private SystemPrivacy privacy;
+    /**
+     * Get the name of the system object.
+     *
+     * @return String
+     */
     
     public String getName() {
         return name;
     }
+    /**
+     * Set the name of the system object.
+     *
+     * @param name The name of the system object.
+     */
     
     public void setName(String name) {
         this.name = name;
     }
+    /**
+     * Get the UUID of the system object.
+     *
+     * @return UUID
+     */
     
     public UUID getUuid() {
         return uuid;
     }
+    /**
+     * Set the UUID of the system object.
+     *
+     * @param uuid The UUID of the system object.
+     */
     
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
+    /**
+     * Get the 5-character ID of the system object.
+     *
+     * @return String
+     */
     
     public String getId() {
         return id;
     }
+    /**
+     * Set the 5-character ID of the system object.
+     *
+     * @param id The 5-character ID of the system object.
+     */
     
     public void setId(String id) {
         this.id = id;
     }
+    /**
+     * Get the description of the system object.
+     *
+     * @return String
+     */
     
     public String getDescription() {
         return description;

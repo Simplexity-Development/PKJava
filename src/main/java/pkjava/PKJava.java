@@ -57,7 +57,7 @@ public class PKJava {
 
     private HttpClient pkJavaClient;
     private String userAgent = "PKJava Library - Contact at https://github.com/Simplexity-Development/PKJava/issues";
-    private String authToken;
+    private String authToken = "";
     /**
      * The Gson object for serializing and deserializing JSON.
      */
